@@ -17,7 +17,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       style={{ transitionDelay: product.delay }}
     >
       <div className={`h-70 flex items-center justify-center relative overflow-hidden bg-gradient-to-br ${product.gradient}`}>
-        <Badge>{product.badge}</Badge>
+        {/* <Badge>{product.badge}</Badge> */}
         <div className="relative w-full h-72 overflow-hidden flex items-center justify-center bg-white">
   <img
     src={product.image}

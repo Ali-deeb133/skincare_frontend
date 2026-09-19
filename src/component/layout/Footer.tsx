@@ -1,13 +1,5 @@
 import React from 'react';
 
-// ============ الثوابت والتكوين ============
-// const BRAND_COLORS = {
-//   primary: '#ec4899',
-//   secondary: '#f9a8d4',
-//   darkBg: '#1a0a14',
-//   mutedText: '#9d6b8e',
-//   darkerMuted: '#6b4c63',
-// } as const;
 
 const FOOTER_LINKS = {
   shop: ['Serums', 'Moisturizers', 'Cleansers', 'Eye Care', 'Bundles'],
