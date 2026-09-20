@@ -6,6 +6,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../../../component/ui/Button';
 import { animationClasses, orbAnimations } from '../../../utils/animations';
+import image from '../../../assets/image/image1.jpg'
 
 // =====================
 // --- Constants & Types ---
@@ -153,7 +154,7 @@ const RightVisual = () => (
 
     {/* Product Image */}
     <div className={`absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[380px] md:h-[380px] rounded-full overflow-hidden border-4 border-white/20 ${animationClasses.bottleFloat}`}>
-      <img src="/src/assets/image/image1.jpg" alt="Skincare Product" className="w-full h-full object-cover" />
+      <img src={image} alt="Skincare Product" className="w-full h-full object-cover" />
     </div>
 
     {/* Floating Cards - تعديل المواقع لتناسب الجوال */}
