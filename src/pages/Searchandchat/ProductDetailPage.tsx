@@ -4,6 +4,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { useProducts } from "../../hooks/useproduct";
 import useCart from "../../hooks/usecart";
 import type { Product } from "../../types/Product.type";
+import { getOptimizedImageUrl } from "../../utils/imgeUrl";
 
 const ProductDetailPage: React.FC = () => {
   const { id } = useParams();
@@ -71,7 +72,8 @@ const ProductDetailPage: React.FC = () => {
           {/* IMAGE */}
           <div className="flex items-center justify-center group">
             <img
-              src={`http://localhost:8000/media/${product.url}`}
+              // src={`http://localhost:8000/media/${product.url}`}
+              src={getOptimizedImageUrl(`${import.meta.env.VITE_API_URL}/media/${product.url}`)}
               alt={product.product_name}
               className="w-full max-w-md object-contain transition-transform duration-500 group-hover:scale-105"
             />

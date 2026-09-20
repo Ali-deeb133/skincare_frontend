@@ -3,7 +3,8 @@ import React ,{useState}from 'react';
 import { Link } from 'react-router-dom';
 import { Badge } from '../ui/Badge';
 import type { Product } from '../../types/Product.type';
-import useCart from '../../hooks/usecart'; // عدّل الـ path حسب مشروعك
+import useCart from '../../hooks/usecart'; 
+import { getOptimizedImageUrl } from '../../utils/imgeUrl';
 
 interface ProductCardProps {
   product: Product;
@@ -37,7 +38,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       <div className="aspect-square bg-gradient-to-br from-[#fef8fb] to-[#f8d7e8] flex items-center justify-center relative overflow-hidden">
         {product.url ? (
           <img
-            src={`${import.meta.env.VITE_API_URL}/media/${product.url}`}
+            // src={`${import.meta.env.VITE_API_URL}/media/${product.url}`}
+            src={getOptimizedImageUrl(`${import.meta.env.VITE_API_URL}/media/${product.url}`)}
             alt={product.product_name ?? 'Product Image'}
             loading="lazy"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"

@@ -24,12 +24,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   const finalTotal = totalPrice + shipping;
   const isClearing = loadingAction === "clear";
 
-  // const handleClearClick = () => setShowConfirm(true);
-
-  // const handleConfirm = () => {
-  //   setShowConfirm(false);
-  //   onClear();
-  // };
+  
 
   return (
     <>
@@ -55,21 +50,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
             <p className="text-center text-sm text-gray-400 mb-6">
               All {itemCount} items will be removed. This can't be undone.
             </p>
-{/* 
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowConfirm(false)}
-                className="flex-1 py-2.5 rounded-2xl border border-rose-100 text-gray-500 text-sm font-medium hover:bg-rose-50 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleConfirm}
-                className="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-[#e07aab] to-[#c0508a] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                Yes, clear it
-              </button>
-            </div> */}
+
           </div>
         </div>
       )}

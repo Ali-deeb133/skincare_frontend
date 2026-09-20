@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import useCart from "../../../hooks/usecart";
 import type { CartItem as CartItemType } from "../../../types/Cart.type";
+import { getOptimizedImageUrl } from "../../../utils/imgeUrl";
 
 const CartItemCard: React.FC<{ item: CartItemType }> = ({ item }) => {
   const {
@@ -49,7 +50,8 @@ const CartItemCard: React.FC<{ item: CartItemType }> = ({ item }) => {
       <div className="relative w-20 h-20 rounded-xl bg-gradient-to-br from-rose-50 to-pink-100 flex-shrink-0 overflow-hidden">
         {item.product.url ? (
           <img
-            src={`http://localhost:8000/media/${item.product.url}`}
+            // src={`http://localhost:8000/media/${item.product.url}`}
+            src={getOptimizedImageUrl(`${import.meta.env.VITE_API_URL}/media/${item.product.url}`)}
             alt={item.product.product_name}
             className="w-full h-full object-cover"
           />
