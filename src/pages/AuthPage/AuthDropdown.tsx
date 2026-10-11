@@ -1,4 +1,3 @@
-
 // ============================================================
 // AuthDropdown.tsx - Luxury Skincare Cherry Blossom Edition
 // ============================================================
@@ -22,7 +21,8 @@ type Petal = {
 const NUM_PETALS = 30;
 
 const AuthDropdown = () => {
-  const { isDropdownOpen, dropdownMode, closeDropdown, switchToLogin, switchToRegister } = useAuth();
+  const { isDropdownOpen, dropdownMode, closeDropdown, switchToLogin, switchToRegister } =
+    useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -35,7 +35,7 @@ const AuthDropdown = () => {
       size: Math.random() * 12 + 6,
       speed: Math.random() * 1 + 0.5,
       sway: Math.random() * 50 + 20,
-      rotation: Math.random() * 360
+      rotation: Math.random() * 360,
     }))
   );
 
@@ -133,18 +133,22 @@ const AuthDropdown = () => {
         transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]
         ${isDropdownOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0 pointer-events-none'}`}
       >
-        <div className="mx-4 mt-4 relative overflow-hidden rounded-3xl shadow-2xl border border-white/40 
-          bg-gradient-to-b from-white/100 to-white/90 backdrop-blur-xl">
-
+        <div
+          className="mx-4 mt-4 relative overflow-hidden rounded-3xl shadow-2xl border border-white/40 
+          bg-gradient-to-b from-white/100 to-white/90 backdrop-blur-xl"
+        >
           {/* Canvas للبتلات */}
-          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-10 pointer-events-none" />
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full z-10 pointer-events-none"
+          />
 
           {/* المحتوى */}
           <div className="relative z-20 px-8 py-6 max-h-[90vh] overflow-y-auto">
-
             {/* زر اغلاق */}
             <button
               onClick={closeDropdown}
+              aria-label="Close"
               className="absolute top-5 left-5 w-9 h-9 flex items-center justify-center
               rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition"
             >
@@ -152,25 +156,25 @@ const AuthDropdown = () => {
             </button>
 
             {/* أزرار التبديل */}
-            <div className="flex bg-[#F5F5DC] rounded-2xl p-1 mb-8 mt-2 border border-stone-200">
+            <div className="flex bg-sakura-base rounded-2xl p-1 mb-8 mt-2 border border-sakura-mid">
               <button
                 onClick={switchToLogin}
                 className={`flex-1 py-3 text-sm font-bold rounded-xl transition
-                ${dropdownMode === 'login' ? 'bg-white text-rose-500 shadow' : 'text-stone-500 hover:text-stone-700'}`}
+                ${dropdownMode === 'login' ? 'bg-white text-sakura-dark shadow' : 'text-sakura-muted hover:text-sakura-ink'}`}
               >
                 Login 🔑
               </button>
               <button
                 onClick={switchToRegister}
                 className={`flex-1 py-3 text-sm font-bold rounded-xl transition
-                ${dropdownMode === 'register' ? 'bg-white text-rose-500 shadow' : 'text-stone-500 hover:text-stone-700'}`}
+                ${dropdownMode === 'register' ? 'bg-white text-sakura-dark shadow' : 'text-sakura-muted hover:text-sakura-ink'}`}
               >
                 New Account 🌱
               </button>
             </div>
 
             {/* الفورم */}
-            <div key={dropdownMode} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <div key={dropdownMode} className="animate-fadeSlide">
               {dropdownMode === 'login' ? <LoginForm /> : <RegisterForm />}
             </div>
           </div>

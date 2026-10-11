@@ -5,10 +5,10 @@ export const animationClasses = {
   bottleFloat: 'animate-[bottleFloat_4s_ease-in-out_infinite]',
   floatPetal: 'animate-[floatPetal_6s_ease-in-out_infinite]',
   floatTag: 'animate-[floatTag_6s_ease-in-out_infinite]',
-  pulse: 'animate-[pulse_2s_ease-in-out_infinite]',
-}as const;
+  pulse: 'animate-[dotPulse_2s_ease-in-out_infinite]',
+} as const;
 
 export const orbAnimations = {
   orb1: 'animate-[orb1_8s_ease-in-out_infinite]',
   orb2: 'animate-[orb2_10s_ease-in-out_infinite]',
-}as const;
+} as const;

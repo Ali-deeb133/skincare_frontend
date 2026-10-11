@@ -4,9 +4,8 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { User } from '../types/backendauth.types';
-import type { AuthError, AuthMode } from '../types/auth.types';
-import { tokenService } from '../services/api';
+import type { AuthError, AuthMode, User } from '../types/auth.types';
+import { tokenService, setSessionExpiredHandler } from '../services/api';
 
 // ============================================================
 // State Interface
@@ -28,7 +27,6 @@ interface AuthStore {
   clearAuth: () => void;
   setLoading: (loading: boolean) => void;
   setError: (error: AuthError | null) => void;
-  updateUser: (updates: Partial<User>) => void;
 
   // ---- UI Actions ----
   openDropdown: (mode?: AuthMode) => void;
@@ -82,14 +80,7 @@ export const useAuthStore = create<AuthStore>()(
 
       setLoading: (isLoading) => set({ isLoading }),
 
-      setError: (error) => set({ error}),
-
-      updateUser: (updates) => {
-        const currentUser = get().user;
-        if (currentUser) {
-          set({ user: { ...currentUser, ...updates } });
-        }
-      },
+      setError: (error) => set({ error }),
 
       // ========================================================
       // Dropdown UI
@@ -119,3 +110,16 @@ export const useAuthStore = create<AuthStore>()(
     }
   )
 );
+
+// ============================================================
+// Keep the saved user and the tokens in step
+// ============================================================
+
+// When the API layer decides the session is dead, forget the user too.
+setSessionExpiredHandler(() => useAuthStore.getState().clearAuth());
+
+// A saved user without a token (e.g. storage was partly cleared) cannot make
+// authenticated requests, so do not show them as logged in.
+if (useAuthStore.getState().isAuthenticated && !tokenService.getAccess()) {
+  useAuthStore.getState().clearAuth();
+}

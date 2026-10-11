@@ -1,9 +1,8 @@
 import { useCallback } from 'react';
-import axios from 'axios';  // استيراد axios للتحقق من نوع الخطأ
+import axios from 'axios'; // استيراد axios للتحقق من نوع الخطأ
 import { useAuthStore } from '../store/authStore';
 import { loginUser, registerUser } from '../services/authService';
-import type { LoginRequest, RegisterRequest } from '../types/backendauth.types';
-import type { AuthError } from '../types/auth.types';
+import type { AuthError, LoginRequest, RegisterRequest } from '../types/auth.types';
 
 // واجهة لتعريف شكل الخطأ القادم من السيرفر (Backend)
 interface BackendError {
@@ -29,18 +28,21 @@ export const useAuth = () => {
   } = useAuthStore();
 
   // --- دالة مساعدة لمعالجة الأخطاء (DRY Principle) ---
-  const handleAuthError = useCallback((err: unknown, defaultMsg: string) => {
-    let message = defaultMsg;
+  const handleAuthError = useCallback(
+    (err: unknown, defaultMsg: string) => {
+      let message = defaultMsg;
 
-    // التحقق بأمان إذا كان الخطأ قادم من Axios
-    if (axios.isAxiosError<BackendError>(err)) {
-      message = err.response?.data?.detail || defaultMsg;
-    }
+      // التحقق بأمان إذا كان الخطأ قادم من Axios
+      if (axios.isAxiosError<BackendError>(err)) {
+        message = err.response?.data?.detail || defaultMsg;
+      }
 
-    const authError: AuthError = { message };
-    setError(authError);
-    return { success: false, error: authError };
-  }, [setError]);
+      const authError: AuthError = { message };
+      setError(authError);
+      return { success: false, error: authError };
+    },
+    [setError]
+  );
 
   // ============================================================
   // Login
@@ -53,16 +55,12 @@ export const useAuth = () => {
 
         const response = await loginUser(credentials);
 
-        setAuth(
-          response.user,
-          response.tokens.access,
-          response.tokens.refresh
-        );
+        setAuth(response.user, response.tokens.access, response.tokens.refresh);
 
         closeDropdown();
         return { success: true };
       } catch (err) {
-        return handleAuthError(err, 'فشل تسجيل الدخول');
+        return handleAuthError(err, 'Login failed. Please check your email and password.');
       } finally {
         setLoading(false);
       }
@@ -87,16 +85,12 @@ export const useAuth = () => {
           password: credentials.password,
         });
 
-        setAuth(
-          loginResponse.user,
-          loginResponse.tokens.access,
-          loginResponse.tokens.refresh
-        );
+        setAuth(loginResponse.user, loginResponse.tokens.access, loginResponse.tokens.refresh);
 
         closeDropdown();
         return { success: true };
       } catch (err) {
-        return handleAuthError(err, 'فشل إنشاء الحساب');
+        return handleAuthError(err, 'Could not create your account. Please try again.');
       } finally {
         setLoading(false);
       }

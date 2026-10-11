@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { ProductFilters, SortOrder } from '../types/Product.type';
+import type { ProductFilters, SortOrder } from '../types/product.types';
 
 interface SearchState {
   filters: ProductFilters;
@@ -21,24 +21,23 @@ export const useSearchStore = create<SearchState>((set) => ({
 
   setSearch: (search) =>
     set((s) => ({
-      filters: { ...s.filters, search }
+      filters: { ...s.filters, search },
     })),
 
   setProductType: (product_type) =>
     set((s) => ({
-      filters: { ...s.filters, product_type }
+      filters: { ...s.filters, product_type },
     })),
 
   setPriceRange: (price__gte, price__lte) =>
     set((s) => ({
-      filters: { ...s.filters, price__gte, price__lte }
+      filters: { ...s.filters, price__gte, price__lte },
     })),
 
   setOrdering: (ordering) =>
     set((s) => ({
-      filters: { ...s.filters, ordering }
+      filters: { ...s.filters, ordering },
     })),
 
-  resetFilters: () =>
-    set({ filters: defaultFilters }),
+  resetFilters: () => set({ filters: defaultFilters }),
 }));

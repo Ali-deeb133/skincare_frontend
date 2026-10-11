@@ -8,19 +8,14 @@ import type {
   RegisterRequest,
   AuthResponse,
   RegisterResponse,
-} from '../types/backendauth.types';
+} from '../types/auth.types';
 
 // ============================================================
 // Login
 // POST /api/accounts/login/
 // ============================================================
-export const loginUser = async (
-  credentials: LoginRequest
-): Promise<AuthResponse> => {
-  const { data } = await api.post<AuthResponse>(
-    '/api/accounts/login/',
-    credentials
-  );
+export const loginUser = async (credentials: LoginRequest): Promise<AuthResponse> => {
+  const { data } = await api.post<AuthResponse>('/api/accounts/login/', credentials);
 
   return data;
 };
@@ -30,28 +25,8 @@ export const loginUser = async (
 // POST /api/accounts/register/
 // (لا يعيد tokens حسب التوثيق)
 // ============================================================
-export const registerUser = async (
-  credentials: RegisterRequest
-): Promise<RegisterResponse> => {
-  const { data } = await api.post<RegisterResponse>(
-    '/api/accounts/register/',
-    credentials
-  );
-
-  return data;
-};
-
-// ============================================================
-// Refresh Token (إذا كنت تستخدم SimpleJWT)
-// POST /api/token/refresh/
-// ============================================================
-export const refreshAccessToken = async (
-  refresh: string
-): Promise<{ access: string }> => {
-  const { data } = await api.post<{ access: string }>(
-    '/api/token/refresh/',
-    { refresh }
-  );
+export const registerUser = async (credentials: RegisterRequest): Promise<RegisterResponse> => {
+  const { data } = await api.post<RegisterResponse>('/api/accounts/register/', credentials);
 
   return data;
 };

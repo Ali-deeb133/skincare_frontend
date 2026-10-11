@@ -2,13 +2,20 @@
 // RegisterForm.tsx - Backend Aligned & Structured Version
 // ============================================================
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useId } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, Loader2, CheckCircle } from 'lucide-react';
 import { useAuth } from '../../../hooks/useAuth';
 import { validateRegisterForm } from '../../../utils/validation';
-import type { RegisterRequest } from '../../../types/backendauth.types';
+import type { RegisterRequest } from '../../../types/auth.types';
 
-const RegisterForm = () => {
+interface RegisterFormProps {
+  // Set by the standalone /register page, where there is no drop-down to switch.
+  onSwitchToLogin?: () => void;
+}
+
+const RegisterForm = ({ onSwitchToLogin }: RegisterFormProps) => {
+  // The form can be on screen twice (drop-down and page), so ids must be unique.
+  const formId = useId();
   const { register, isLoading, error, switchToLogin } = useAuth();
 
   const [formData, setFormData] = useState<RegisterRequest & { confirmPassword: string }>({
@@ -21,7 +28,9 @@ const RegisterForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof typeof formData, string>>>({});
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof typeof formData, string>>>(
+    {}
+  );
   const [touched, setTouched] = useState<Partial<Record<keyof typeof formData, boolean>>>({});
 
   // ============================================================
@@ -48,10 +57,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     // Mark all fields as touched
-    const allTouched = Object.keys(formData).reduce(
-      (acc, k) => ({ ...acc, [k]: true }),
-      {}
-    );
+    const allTouched = Object.keys(formData).reduce((acc, k) => ({ ...acc, [k]: true }), {});
     setTouched(allTouched);
 
     // Validate
@@ -61,26 +67,32 @@ const RegisterForm = () => {
     if (Object.keys(errors).length > 0) return;
 
     // Call register from useAuth
-    await register(formData);
+    // confirmPassword is only for this form; the API does not expect it.
+    await register({
+      first_name: formData.first_name,
+      last_name: formData.last_name,
+      email: formData.email,
+      password: formData.password,
+    });
   };
 
   const inputClass = (field: keyof typeof formData) =>
     `w-full py-2.5 text-sm bg-white border rounded-xl outline-none transition-all duration-200
-     focus:ring-2 focus:ring-green-300 focus:border-green-400
-     ${touched[field] && fieldErrors[field]
-       ? 'border-red-300 bg-red-50'
-       : 'border-gray-200 hover:border-green-300'}`;
+     focus:ring-2 focus:ring-pink-300 focus:border-pink-400
+     ${
+       touched[field] && fieldErrors[field]
+         ? 'border-red-300 bg-red-50'
+         : 'border-gray-200 hover:border-pink-300'
+     }`;
 
   return (
     <div className="w-full">
       {/* Header */}
       <div className="mb-5 text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-2xl mb-3">
+        <div className="inline-flex items-center justify-center w-12 h-12 bg-pink-100 rounded-2xl mb-3">
           <span className="text-2xl">🌱</span>
         </div>
-        <h2 className="text-xl font-semibold text-gray-800 font-['Playfair_Display']">
-         Create a New Account
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-800 font-display">Create a New Account</h2>
         <p className="text-sm text-gray-500 mt-1">Your skincare journey starts here</p>
       </div>
 
@@ -94,13 +106,17 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit} noValidate className="space-y-3">
         {/* First Name */}
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1.5">
-           First Name
+          <label
+            htmlFor={`${formId}-first-name`}
+            className="block text-xs font-medium text-gray-600 mb-1.5"
+          >
+            First Name
           </label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
+              id={`${formId}-first-name`}
               name="first_name"
               value={formData.first_name}
               onChange={handleChange}
@@ -116,13 +132,17 @@ const RegisterForm = () => {
 
         {/* Last Name */}
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1.5">
+          <label
+            htmlFor={`${formId}-last-name`}
+            className="block text-xs font-medium text-gray-600 mb-1.5"
+          >
             Last Name
           </label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="text"
+              id={`${formId}-last-name`}
               name="last_name"
               value={formData.last_name}
               onChange={handleChange}
@@ -138,13 +158,17 @@ const RegisterForm = () => {
 
         {/* Email */}
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1.5">
-           Email
+          <label
+            htmlFor={`${formId}-email`}
+            className="block text-xs font-medium text-gray-600 mb-1.5"
+          >
+            Email
           </label>
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type="email"
+              id={`${formId}-email`}
               name="email"
               value={formData.email}
               onChange={handleChange}
@@ -161,13 +185,17 @@ const RegisterForm = () => {
 
         {/* Password */}
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1.5">
-           Password
+          <label
+            htmlFor={`${formId}-password`}
+            className="block text-xs font-medium text-gray-600 mb-1.5"
+          >
+            Password
           </label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type={showPassword ? 'text' : 'password'}
+              id={`${formId}-password`}
               name="password"
               value={formData.password}
               onChange={handleChange}
@@ -179,6 +207,7 @@ const RegisterForm = () => {
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -191,13 +220,17 @@ const RegisterForm = () => {
 
         {/* Confirm Password */}
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1.5">
-           Confirm Password
+          <label
+            htmlFor={`${formId}-confirmPassword`}
+            className="block text-xs font-medium text-gray-600 mb-1.5"
+          >
+            Confirm Password
           </label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <input
               type={showConfirm ? 'text' : 'password'}
+              id={`${formId}-confirmPassword`}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
@@ -209,14 +242,14 @@ const RegisterForm = () => {
             <button
               type="button"
               onClick={() => setShowConfirm((v) => !v)}
+              aria-label={showConfirm ? 'Hide password' : 'Show password'}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
             >
               {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
-            {formData.confirmPassword &&
-              formData.password === formData.confirmPassword && (
-                <CheckCircle className="absolute left-10 top-1/2 -translate-y-1/2 w-4 h-4 text-green-500" />
-              )}
+            {formData.confirmPassword && formData.password === formData.confirmPassword && (
+              <CheckCircle className="absolute left-10 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-500" />
+            )}
           </div>
           {touched.confirmPassword && fieldErrors.confirmPassword && (
             <p className="text-xs text-red-500 mt-1">{fieldErrors.confirmPassword}</p>
@@ -227,8 +260,8 @@ const RegisterForm = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full py-2.5 bg-gradient-to-r from-pink-500 to-emerald-500 text-white text-sm font-semibold rounded-xl
-            hover:from-pink-600 hover:to-emerald-600 active:scale-[0.98] transition-all duration-200
+          className="w-full py-2.5 bg-gradient-to-r from-primary to-primary-dark text-white text-sm font-semibold rounded-xl
+            hover:from-primary-dark hover:to-secondary active:scale-[0.98] transition-all duration-200
             disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-pink-200"
         >
           {isLoading ? (
@@ -243,11 +276,11 @@ const RegisterForm = () => {
 
         {/* Switch to Login */}
         <p className="text-center text-xs text-gray-500">
-          Don't have an account?{' '}
+          Already have an account?{' '}
           <button
             type="button"
-            onClick={switchToLogin}
-            className="text-green-600 hover:text-green-700 font-semibold transition-colors"
+            onClick={onSwitchToLogin ?? switchToLogin}
+            className="text-pink-600 hover:text-pink-700 font-semibold transition-colors"
           >
             Sign in
           </button>

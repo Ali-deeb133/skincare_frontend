@@ -1,0 +1,17 @@
+export const PRODUCT_TYPES = [
+  'All',
+  'Moisturiser',
+  'Serum',
+  'Oil',
+  'Mist',
+  'Balm',
+  'Mask',
+  'Peel',
+  'Eye Care',
+  'Cleanser',
+  'Toner',
+  'Exfoliator',
+  'Bath Salts',
+  'Body Wash',
+  'Bath Oil',
+];

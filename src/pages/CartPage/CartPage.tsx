@@ -1,18 +1,17 @@
-
-
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import useCart from "../../hooks/usecart";
-import CartItemCard from "./Components/CartItemCard";
-import OrderSummary from "./Components/OrderSummary";
-import EmptyCart from "./Components/EmptyCart";
-import NotLoggedInBanner from "./Components/NotLoggedInBanner";
-import Toast from "./Components/Toast";
-import CheckoutModal from "./Components/CheckoutModel";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useCart from '../../hooks/useCart';
+import CartItemCard from './components/CartItemCard';
+import OrderSummary from './components/OrderSummary';
+import EmptyCart from './components/EmptyCart';
+import NotLoggedInBanner from './components/NotLoggedInBanner';
+import CheckoutModal from './components/CheckoutModal';
 
 const CartPage: React.FC = () => {
   const navigate = useNavigate();
 
+  // The cart itself is loaded by CartSync (in the Layout) whenever a user is
+  // logged in, so this page only reads it.
   const {
     cart,
     user,
@@ -20,18 +19,14 @@ const CartPage: React.FC = () => {
     isLoading,
     itemCount,
     totalPrice,
-    toastMessage,
     clearCart,
     loadingAction,
+    fetchError,
     fetchCart,
   } = useCart();
 
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
-
-  useEffect(() => {
-    fetchCart();
-  }, []);
 
   const handleClearConfirmed = () => {
     setShowClearConfirm(false);
@@ -40,26 +35,48 @@ const CartPage: React.FC = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fdf0f5] via-white to-rose-50">
+      <div className="min-h-screen bg-gradient-to-br from-sakura-base via-white to-rose-50">
         <div className="max-w-4xl mx-auto px-4 py-12">
           <CartHeader itemCount={0} />
           <NotLoggedInBanner />
         </div>
-        <Toast message={toastMessage} />
       </div>
     );
   }
 
-  if (loadingAction === "fetch" || (cart === null && !loadingAction)) {
+  if (cart === null && fetchError && loadingAction !== 'fetch') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fdf0f5] via-white to-rose-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-sakura-base via-white to-rose-50">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          <CartHeader itemCount={0} />
+          <div className="flex flex-col items-center justify-center py-24 px-6 text-center">
+            <span className="text-4xl mb-4">😕</span>
+            <h2 className="text-xl font-bold text-gray-700 mb-2">We couldn't load your cart</h2>
+            <p role="alert" className="text-gray-400 text-sm mb-8 max-w-xs">
+              {fetchError}
+            </p>
+            <button
+              onClick={() => fetchCart()}
+              className="px-8 py-3 bg-gradient-to-r from-sakura-accent to-sakura-dark text-white font-semibold rounded-2xl hover:opacity-90 transition-opacity text-sm"
+            >
+              Try again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (loadingAction === 'fetch' || cart === null) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-sakura-base via-white to-rose-50 flex items-center justify-center">
         <CartSkeleton />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fdf0f5] via-white to-rose-50">
+    <div className="min-h-screen bg-gradient-to-br from-sakura-base via-white to-rose-50">
       {/* Decorative blobs */}
       <div className="fixed top-0 right-0 w-96 h-96 bg-rose-100/30 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="fixed bottom-0 left-0 w-80 h-80 bg-pink-100/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
@@ -75,9 +92,7 @@ const CartPage: React.FC = () => {
             <div className="w-14 h-14 rounded-full bg-rose-50 flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl">🗑️</span>
             </div>
-            <h3 className="text-center font-bold text-gray-800 text-base mb-1">
-              Clear your cart?
-            </h3>
+            <h3 className="text-center font-bold text-gray-800 text-base mb-1">Clear your cart?</h3>
             <p className="text-center text-sm text-gray-400 mb-6">
               All {itemCount} items will be removed. This can't be undone.
             </p>
@@ -90,7 +105,7 @@ const CartPage: React.FC = () => {
               </button>
               <button
                 onClick={handleClearConfirmed}
-                className="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-[#e07aab] to-[#c0508a] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+                className="flex-1 py-2.5 rounded-2xl bg-gradient-to-r from-sakura-accent to-sakura-dark text-white text-sm font-semibold hover:opacity-90 transition-opacity"
               >
                 Yes, clear it
               </button>
@@ -103,13 +118,13 @@ const CartPage: React.FC = () => {
         <CartHeader itemCount={itemCount} />
 
         {isEmpty ? (
-          <EmptyCart  />
+          <EmptyCart />
         ) : (
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
             <div className="space-y-3">
               <div className="flex items-center justify-between mb-2 px-1">
                 <p className="text-sm text-gray-500">
-                  {itemCount} {itemCount === 1 ? "item" : "items"} in your cart
+                  {itemCount} {itemCount === 1 ? 'item' : 'items'} in your cart
                 </p>
                 <button
                   onClick={() => setShowClearConfirm(true)}
@@ -132,8 +147,8 @@ const CartPage: React.FC = () => {
                 ))}
 
               <button
-                onClick={() => navigate("/search")}
-                className="mt-2 text-sm text-[#e07aab] hover:text-[#c0508a] transition-colors flex items-center gap-1 px-1"
+                onClick={() => navigate('/search')}
+                className="mt-2 text-sm text-sakura-accent hover:text-sakura-dark transition-colors flex items-center gap-1 px-1"
               >
                 ← Continue Shopping
               </button>
@@ -144,15 +159,12 @@ const CartPage: React.FC = () => {
                 totalPrice={totalPrice}
                 itemCount={itemCount}
                 onCheckout={() => setIsCheckoutOpen(true)}
-                // onClear={() => setShowClearConfirm(true)}
                 loadingAction={loadingAction}
               />
             </div>
           </div>
         )}
       </div>
-
-      <Toast message={toastMessage} />
 
       <CheckoutModal
         isOpen={isCheckoutOpen}
@@ -165,14 +177,12 @@ const CartPage: React.FC = () => {
 
 const CartHeader: React.FC<{ itemCount: number }> = ({ itemCount }) => (
   <div className="pt-25 flex items-center gap-3">
-    <p className="text-xs text-[#e07aab] font-medium tracking-widest uppercase">
-      Lumière
-    </p>
+    <p className="text-xs text-sakura-accent font-medium tracking-widest uppercase">Lumière</p>
     <h1 className="text-3xl font-bold text-gray-800">
       Shopping Cart
       {itemCount > 0 && (
         <span className="ml-3 text-base font-normal text-gray-400">
-          ({itemCount} {itemCount === 1 ? "item" : "items"})
+          ({itemCount} {itemCount === 1 ? 'item' : 'items'})
         </span>
       )}
     </h1>
@@ -193,4 +203,4 @@ const CartSkeleton: React.FC = () => (
   </div>
 );
 
-export default CartPage
+export default CartPage;

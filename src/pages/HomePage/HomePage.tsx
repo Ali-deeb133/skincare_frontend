@@ -1,7 +1,7 @@
 import React from 'react';
-import { HeroBanner } from './component/HeroBanner';
-import { FeaturedProducts } from './component/FeaturedProducts';
-import { AboutSection } from './component/AboutSection';
+import { HeroBanner } from './components/HeroBanner';
+import { FeaturedProducts } from './components/FeaturedProducts';
+import { AboutSection } from './components/AboutSection';
 
 export const HomePage: React.FC = () => {
   return (
