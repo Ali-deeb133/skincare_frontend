@@ -114,13 +114,13 @@ const CartPage: React.FC = () => {
         </div>
       )}
 
-      <div className="relative max-w-5xl mx-auto px-4 py-10">
+      <div className="relative max-w-5xl mx-auto px-4 pt-10 pb-16">
         <CartHeader itemCount={itemCount} />
 
         {isEmpty ? (
           <EmptyCart />
         ) : (
-          <div className="mt-8 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
+          <div className="mt-6 sm:mt-8 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
             <div className="space-y-3">
               <div className="flex items-center justify-between mb-2 px-1">
                 <p className="text-sm text-gray-500">
@@ -129,7 +129,7 @@ const CartPage: React.FC = () => {
                 <button
                   onClick={() => setShowClearConfirm(true)}
                   disabled={isLoading}
-                  className="text-xs text-gray-300 hover:text-rose-400 transition-colors disabled:opacity-40"
+                  className="text-xs text-gray-400 hover:text-rose-400 transition-colors disabled:opacity-40 py-2 pl-3"
                 >
                   Remove all
                 </button>
@@ -176,12 +176,12 @@ const CartPage: React.FC = () => {
 };
 
 const CartHeader: React.FC<{ itemCount: number }> = ({ itemCount }) => (
-  <div className="pt-25 flex items-center gap-3">
+  <div className="pt-14 sm:pt-25 flex flex-wrap items-center gap-x-3 gap-y-1">
     <p className="text-xs text-sakura-accent font-medium tracking-widest uppercase">Lumière</p>
-    <h1 className="text-3xl font-bold text-gray-800">
+    <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
       Shopping Cart
       {itemCount > 0 && (
-        <span className="ml-3 text-base font-normal text-gray-400">
+        <span className="ml-2 sm:ml-3 text-sm sm:text-base font-normal text-gray-400">
           ({itemCount} {itemCount === 1 ? 'item' : 'items'})
         </span>
       )}

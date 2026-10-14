@@ -47,12 +47,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className="text-6xl select-none">🧴</span>
         )}
 
-        <Badge className="absolute top-6.5 right-6.5">{product.product_type}</Badge>
+        <Badge className="absolute top-2 right-2 sm:top-6.5 sm:right-6.5 max-w-[calc(100%-1rem)] truncate">
+          {product.product_type}
+        </Badge>
       </div>
 
       {/* Body */}
-      <div className="p-4">
-        <h3 className="text-sm font-bold text-sakura-ink leading-snug mb-1.5 line-clamp-2">
+      <div className="p-3 sm:p-4">
+        <h3 className="text-[13px] sm:text-sm font-bold text-sakura-ink leading-snug mb-1.5 line-clamp-2">
           {product.product_name ?? 'Name Unavailable'}
         </h3>
 
@@ -62,8 +64,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </p>
         )}
 
-        <div className="flex items-center justify-between">
-          <span className="font-display text-xl font-bold text-sakura-dark">
+        <div className="flex items-center justify-between gap-2">
+          <span className="font-display text-lg sm:text-xl font-bold text-sakura-dark">
             ${price.toFixed(2)}
           </span>
 
@@ -71,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             onClick={handleAddToCart}
             aria-label={`Add ${product.product_name ?? 'product'} to cart`}
             disabled={isAdding || added}
-            className="w-8 h-8 rounded-full bg-gradient-to-br from-sakura-accent to-sakura-dark text-white
+            className="w-9 h-9 sm:w-8 sm:h-8 shrink-0 rounded-full bg-gradient-to-br from-sakura-accent to-sakura-dark text-white
             flex items-center justify-center text-lg font-light
             shadow-[0_3px_10px_rgba(192,80,138,0.3)]
             hover:scale-110 hover:shadow-[0_5px_16px_rgba(192,80,138,0.45)]

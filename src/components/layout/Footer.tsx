@@ -114,10 +114,10 @@ const BottomBar: React.FC = () => (
     className="border-t border-[rgba(236,72,153,0.1)] pt-6.5 
                   flex flex-col md:flex-row justify-between items-center gap-4"
   >
-    <p className="text-xs text-plum-soft m-0 order-2 md:order-1">
+    <p className="text-xs text-plum-soft m-0 order-2 md:order-1 text-center md:text-left">
       © 2026 Lumière Skincare. All rights reserved. Made with 🌸 in Paris.
     </p>
-    <div className="flex gap-6 order-1 md:order-2">
+    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 order-1 md:order-2">
       {BOTTOM_LINKS.map((link) => (
         <a
           key={link}
@@ -136,10 +136,10 @@ const BottomBar: React.FC = () => (
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="bg-plum text-primary-light px-4 md:px-20 pt-16 pb-9">
-      <div className="grid grid-cols-1 md:grid-cols-[2fr_repeat(3,1fr)] gap-8 md:gap-10 mb-13">
-        {/* Brand Column - تأخذ عرض كامل في الموبايل */}
-        <div className="col-span-1 md:col-span-1">
+    <footer className="bg-plum text-primary-light px-5 md:px-20 pt-12 md:pt-16 pb-9">
+      {/* Phones: the brand spans the full width and the link columns sit two to a row */}
+      <div className="grid grid-cols-2 md:grid-cols-[2fr_repeat(3,1fr)] gap-x-6 gap-y-8 md:gap-10 mb-10 md:mb-13">
+        <div className="col-span-2 md:col-span-1">
           <BrandSection />
         </div>
         {/* روابط Shop */}

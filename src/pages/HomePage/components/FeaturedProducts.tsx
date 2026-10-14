@@ -52,7 +52,7 @@ export const FeaturedProducts: React.FC = () => {
   const titleRef = useReveal();
 
   return (
-    <section className="px-6 sm:px-10 lg:px-20 py-16 sm:py-20 lg:py-25 bg-white">
+    <section className="px-5 sm:px-10 lg:px-20 py-16 sm:py-20 lg:py-25 bg-white">
       <div ref={titleRef as React.RefObject<HTMLDivElement>} className="text-center reveal">
         <div className="text-[11px] tracking-widest text-primary font-bold uppercase mb-3.5">
           ✦ Our Formulas
@@ -64,7 +64,7 @@ export const FeaturedProducts: React.FC = () => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 max-w-[1200px] mx-auto mt-14">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 max-w-[1200px] mx-auto mt-10 sm:mt-14">
         {products.map((product) => (
           <FeaturedProductCard key={product.id} product={product} />
         ))}

@@ -20,15 +20,13 @@ const ChatWindow: React.FC<Props> = ({ isOpen, onClose }) => {
     <>
       <aside
         style={{
-          top: '7rem',
-          height: 'calc(100vh - 7rem)',
           transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
           opacity: isOpen ? 1 : 0,
           transition:
             'transform 1000ms cubic-bezier(0.22,1,0.36,1), opacity 1000ms cubic-bezier(0.22,1,0.36,1)',
           pointerEvents: isOpen ? 'auto' : 'none',
         }}
-        className="fixed right-0 bottom-0 z-50 w-[340px] flex flex-col bg-white/85 backdrop-blur-2xl border-l border-[rgba(240,174,207,0.4)] rounded-3xl shadow-[0_4px_30px_rgba(192,80,138,0.1)] will-change-transform"
+        className="fixed right-0 bottom-0 top-[4.5rem] sm:top-28 z-50 w-full sm:w-[340px] flex flex-col bg-white/95 sm:bg-white/85 backdrop-blur-2xl border-l border-[rgba(240,174,207,0.4)] rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-[0_4px_30px_rgba(192,80,138,0.1)] will-change-transform"
       >
         {/* Header */}
         <div className="flex-shrink-0 px-4 py-4 bg-gradient-to-r from-[rgba(248,215,232,0.5)] to-white/60 border-b border-[rgba(240,174,207,0.3)]">
@@ -48,7 +46,7 @@ const ChatWindow: React.FC<Props> = ({ isOpen, onClose }) => {
               onClick={clearMessages}
               title="Clear chat"
               aria-label="Clear chat"
-              className="w-7 h-7 rounded-full bg-white border border-[rgba(240,174,207,0.4)] flex items-center justify-center text-sakura-muted hover:bg-[rgba(248,215,232,0.4)] hover:text-sakura-dark transition-all text-sm"
+              className="w-9 h-9 sm:w-7 sm:h-7 shrink-0 rounded-full bg-white border border-[rgba(240,174,207,0.4)] flex items-center justify-center text-sakura-muted hover:bg-[rgba(248,215,232,0.4)] hover:text-sakura-dark transition-all text-sm"
             >
               🗑️
             </button>
@@ -57,7 +55,7 @@ const ChatWindow: React.FC<Props> = ({ isOpen, onClose }) => {
             <button
               onClick={onClose}
               aria-label="Close chat"
-              className="w-7 h-7 rounded-full bg-white border border-[rgba(240,174,207,0.4)] flex items-center justify-center text-sakura-muted hover:bg-[rgba(248,215,232,0.4)] hover:text-sakura-dark transition-all text-sm"
+              className="w-9 h-9 sm:w-7 sm:h-7 shrink-0 rounded-full bg-white border border-[rgba(240,174,207,0.4)] flex items-center justify-center text-sakura-muted hover:bg-[rgba(248,215,232,0.4)] hover:text-sakura-dark transition-all text-sm"
             >
               ✕
             </button>

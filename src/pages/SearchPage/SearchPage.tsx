@@ -18,6 +18,9 @@ const SearchPage: React.FC = () => {
 
   const [isChatVisible, setIsChatVisible] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  // Phones and tablets: the filter panel is folded away until asked for, so
+  // the products are the first thing under the search bar.
+  const [areFiltersOpen, setAreFiltersOpen] = useState(false);
 
   const openChat = () => {
     setIsChatVisible(true);
@@ -68,11 +71,11 @@ const SearchPage: React.FC = () => {
   }, [filters, setSearch, setProductType, setPriceRange, setOrdering]);
 
   return (
-    <div className="min-h-screen bg-sakura-base pt-30 px-4 md:px-8 relative">
+    <div className="min-h-screen bg-sakura-base pt-24 sm:pt-30 px-4 md:px-8 relative">
       {/* Header */}
       <div className="max-w-screen-2xl mx-auto mb-6 flex items-center justify-between">
         <div>
-          <h1 className="font-display text-3xl text-sakura-ink italic">
+          <h1 className="font-display text-2xl sm:text-3xl text-sakura-ink italic">
             Discover<span className="text-sakura-accent">Your</span> Ideal Routine
           </h1>
           <p className="text-sm text-sakura-muted mt-1">Search by name, ingredient, or type</p>
@@ -96,7 +99,7 @@ const SearchPage: React.FC = () => {
               <button
                 onClick={chip.onRemove}
                 aria-label={`Remove filter ${chip.label}`}
-                className="w-4 h-4 rounded-full bg-sakura-accent text-white text-[9px] flex items-center justify-center hover:bg-sakura-dark transition-colors"
+                className="w-5 h-5 rounded-full bg-sakura-accent text-white text-[9px] flex items-center justify-center hover:bg-sakura-dark transition-colors"
               >
                 ✕
               </button>
@@ -112,11 +115,36 @@ const SearchPage: React.FC = () => {
       )}
 
       {/* Layout */}
-      <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-6 items-start pb-12">
-        <aside className="w-full lg:w-64 xl:w-72 lg:sticky lg:top-20">
+      <div className="max-w-screen-2xl mx-auto flex flex-col lg:flex-row gap-4 lg:gap-6 items-start pb-24 lg:pb-12">
+        <button
+          type="button"
+          onClick={() => setAreFiltersOpen((open) => !open)}
+          aria-expanded={areFiltersOpen}
+          aria-controls="filter-panel"
+          className="lg:hidden w-full flex items-center justify-between px-4 py-3 rounded-2xl bg-white/70 border border-[rgba(240,174,207,0.45)] text-sm font-semibold text-sakura-ink"
+        >
+          <span className="flex items-center gap-2">
+            🎛️ Filters
+            {chips.length > 0 && (
+              <span className="bg-gradient-to-r from-sakura-accent to-sakura-dark text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                {chips.length}
+              </span>
+            )}
+          </span>
+          <span
+            aria-hidden="true"
+            className={`text-sakura-muted transition-transform duration-300 ${areFiltersOpen ? 'rotate-180' : ''}`}
+          >
+            ▾
+          </span>
+        </button>
+        <aside
+          id="filter-panel"
+          className={`${areFiltersOpen ? 'block' : 'hidden'} lg:block w-full lg:w-64 xl:w-72 lg:sticky lg:top-20`}
+        >
           <FilterPanel />
         </aside>
-        <section aria-label="Search results" className="flex-1 min-w-0">
+        <section aria-label="Search results" className="w-full flex-1 min-w-0">
           <SearchResults
             products={products}
             loading={loading}
@@ -135,7 +163,7 @@ const SearchPage: React.FC = () => {
       <button
         onClick={openChat}
         aria-label="Open chat assistant"
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-gradient-to-br from-sakura-accent to-sakura-dark text-white text-xl shadow-lg hover:scale-105 transition z-50"
+        className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 w-14 h-14 rounded-full bg-gradient-to-br from-sakura-accent to-sakura-dark text-white text-xl shadow-lg hover:scale-105 transition z-50"
       >
         💬
       </button>

@@ -39,13 +39,13 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 pt-25"
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 pt-20 sm:pt-25 overflow-y-auto"
       onClick={(e) => e.target === e.currentTarget && handleClose()}
     >
       <div className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-fadeIn" />
 
       <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden animate-scaleIn">
-        <div className="bg-gradient-to-r from-sakura-base to-white px-6 pt-6 pb-4 border-b border-rose-100">
+        <div className="bg-gradient-to-r from-sakura-base to-white px-5 sm:px-6 pt-6 pb-4 border-b border-rose-100">
           <button
             onClick={handleClose}
             aria-label="Close checkout"
@@ -92,7 +92,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        <div className="px-6 py-5">
+        <div className="px-5 sm:px-6 py-5">
           {step === 1 && (
             <div className="space-y-3 animate-fadeIn">
               <h3 className="font-semibold text-gray-700 text-sm mb-4">Personal Information</h3>
@@ -169,7 +169,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose }) => {
           )}
         </div>
 
-        <div className="px-6 pb-6 flex gap-3">
+        <div className="px-5 sm:px-6 pb-6 flex gap-3">
           {step > 1 && <button onClick={handleBack}>Back</button>}
           {step < 3 && <button onClick={handleNext}>Next</button>}
         </div>

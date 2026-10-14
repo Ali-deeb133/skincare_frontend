@@ -13,6 +13,15 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  /* Decorative blobs and orbs reach past the screen edge; without this they
+     make the page scroll sideways on phones. */
+  html,
+  body {
+    overflow-x: clip;
   }
 
   body {
@@ -21,6 +30,7 @@
     font-family: 'DM Sans', sans-serif;
     background: #fff;
     -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -162,5 +172,15 @@
   .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: rgba(240, 174, 207, 0.5) transparent;
+  }
+}
+
+/* iOS Safari zooms the page into any field whose text is smaller than 16px.
+   Keep fields at 16px on phones; the designed sizes return from 640px up. */
+@media (max-width: 639px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
   }
 }

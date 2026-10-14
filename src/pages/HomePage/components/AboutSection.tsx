@@ -22,7 +22,7 @@ export const AboutSection: React.FC = () => {
   const rightRef = useReveal();
 
   return (
-    <section className="px-6 sm:px-10 lg:px-20 py-16 sm:py-20 lg:py-25 bg-gradient-to-br from-[#fff0f5] to-primary-blush relative overflow-hidden">
+    <section className="px-5 sm:px-10 lg:px-20 py-16 sm:py-20 lg:py-25 bg-gradient-to-br from-[#fff0f5] to-primary-blush relative overflow-hidden">
       <div className="absolute top-[-80px] right-[-80px] w-95 h-95 rounded-full bg-[rgba(249,168,212,0.14)] blur-[65px] pointer-events-none" />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 max-w-[1200px] mx-auto items-center">
@@ -46,7 +46,7 @@ export const AboutSection: React.FC = () => {
             results without compromise — 100% clean, 100% effective, always.
           </p>
 
-          <div className="grid grid-cols-2 gap-4 mt-2">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 mt-2">
             {pillars.map((pillar, i) => (
               <div
                 key={i}
@@ -65,13 +65,13 @@ export const AboutSection: React.FC = () => {
         {/* Right Visual */}
         <div
           ref={rightRef as React.RefObject<HTMLDivElement>}
-          className="relative h-[420px] sm:h-[500px] lg:h-130 reveal"
+          className="relative h-[320px] sm:h-[500px] lg:h-130 reveal"
           style={{ transitionDelay: '0.2s' }}
         >
-          <div className="absolute top-0 left-0 w-2/3 h-[62%] bg-gradient-to-br from-primary-soft to-primary-blush rounded-3xl flex items-center justify-center text-8xl shadow-[0_20px_56px_rgba(236,72,153,0.14)] overflow-hidden">
+          <div className="absolute top-0 left-0 w-2/3 h-[62%] bg-gradient-to-br from-primary-soft to-primary-blush rounded-3xl flex items-center justify-center text-6xl sm:text-8xl shadow-[0_20px_56px_rgba(236,72,153,0.14)] overflow-hidden">
             <div className="animate-[bottleFloat_4.5s_ease-in-out_infinite]">🧪</div>
           </div>
-          <div className="absolute bottom-0 right-0 w-3/5 h-[55%] bg-gradient-to-br from-[#f3e5f5] to-[#e1bee7] rounded-3xl flex items-center justify-center text-7xl shadow-[0_20px_56px_rgba(236,72,153,0.14)] overflow-hidden">
+          <div className="absolute bottom-0 right-0 w-3/5 h-[55%] bg-gradient-to-br from-[#f3e5f5] to-[#e1bee7] rounded-3xl flex items-center justify-center text-5xl sm:text-7xl shadow-[0_20px_56px_rgba(236,72,153,0.14)] overflow-hidden">
             <div
               className="animate-[bottleFloat_4.5s_ease-in-out_infinite]"
               style={{ animationDelay: '1s' }}
@@ -79,8 +79,8 @@ export const AboutSection: React.FC = () => {
               🌸
             </div>
           </div>
-          <div className="absolute w-32 h-32 bottom-[30%] left-[57%] bg-white/92 backdrop-blur-md border border-[rgba(236,72,153,0.18)] rounded-3xl flex flex-col items-center justify-center shadow-[0_14px_40px_rgba(236,72,153,0.12)] animate-[floatTag_6s_ease-in-out_infinite]">
-            <div className="text-3xl mb-1.5">💆‍♀️</div>
+          <div className="absolute w-24 h-24 sm:w-32 sm:h-32 bottom-[30%] left-[57%] bg-white/92 backdrop-blur-md border border-[rgba(236,72,153,0.18)] rounded-3xl flex flex-col items-center justify-center shadow-[0_14px_40px_rgba(236,72,153,0.12)] animate-[floatTag_6s_ease-in-out_infinite]">
+            <div className="text-2xl sm:text-3xl mb-1.5">💆‍♀️</div>
             <div className="text-[10px] font-bold text-primary tracking-widest uppercase text-center leading-[1.4]">
               Glow
               <br />

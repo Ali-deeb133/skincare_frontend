@@ -9,7 +9,7 @@ interface Props {
   totalCount: number;
 }
 
-const gridClass = 'grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-5';
+const gridClass = 'grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5';
 const ITEMS_PER_PAGE = 20;
 
 const SearchResults: React.FC<Props> = ({ products, loading, error, totalCount }) => {

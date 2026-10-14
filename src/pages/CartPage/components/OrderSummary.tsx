@@ -21,7 +21,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({
   return (
     <>
       {/* Order Summary Card */}
-      <div className="bg-white rounded-3xl border border-rose-100 p-6 shadow-sm sticky top-24">
+      <div className="bg-white rounded-3xl border border-rose-100 p-5 sm:p-6 shadow-sm lg:sticky lg:top-24">
         <h2 className="font-bold text-gray-800 text-lg mb-5 flex items-center gap-2">
           <span className="text-xl">🛍️</span> Order Summary
         </h2>

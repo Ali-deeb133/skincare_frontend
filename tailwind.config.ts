@@ -2,6 +2,11 @@ import type { Config } from 'tailwindcss';
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  // hover: styles only apply on devices that can hover, so a tap on a phone
+  // does not leave a card lifted or a button highlighted.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     extend: {
       fontFamily: {

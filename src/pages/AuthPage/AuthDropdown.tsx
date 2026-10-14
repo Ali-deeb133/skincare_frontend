@@ -144,7 +144,7 @@ const AuthDropdown = () => {
           />
 
           {/* المحتوى */}
-          <div className="relative z-20 px-8 py-6 max-h-[90vh] overflow-y-auto">
+          <div className="relative z-20 px-5 sm:px-8 py-6 max-h-[calc(100dvh-2rem)] overflow-y-auto">
             {/* زر اغلاق */}
             <button
               onClick={closeDropdown}
@@ -156,7 +156,7 @@ const AuthDropdown = () => {
             </button>
 
             {/* أزرار التبديل */}
-            <div className="flex bg-sakura-base rounded-2xl p-1 mb-8 mt-2 border border-sakura-mid">
+            <div className="flex bg-sakura-base rounded-2xl p-1 mb-6 sm:mb-8 mt-12 border border-sakura-mid">
               <button
                 onClick={switchToLogin}
                 className={`flex-1 py-3 text-sm font-bold rounded-xl transition

@@ -99,24 +99,26 @@ type NavButtonProps = {
   label: string;
   variant?: 'icon' | 'cart';
   badge?: string;
+  className?: string;
 };
 
 // ============ المكونات الفرعية ============
 
 const Logo: React.FC = () => (
-  <Link to="/" className="flex items-center gap-3 no-underline group">
+  <Link to="/" className="flex items-center gap-2 sm:gap-3 no-underline group">
     <div
-      className="w-12 h-12 rounded-full
+      className="w-10 h-10 sm:w-12 sm:h-12 rounded-full shrink-0
                  bg-gradient-to-br from-primary to-primary-light
-                 flex items-center justify-center text-2xl
+                 flex items-center justify-center text-xl sm:text-2xl
                  shadow-[0_6px_20px_rgba(236,72,153,0.35)]
                  transition-transform duration-300
                  group-hover:rotate-[15deg] group-hover:scale-105"
     >
       {NAVBAR_CONFIG.logo.icon}
     </div>
-    <div>
-      <div className="font-serif font-bold text-2xl text-secondary leading-none">
+    {/* On the narrowest phones only the round logo shows, to leave room for the buttons */}
+    <div className="hidden min-[370px]:block">
+      <div className="font-serif font-bold text-xl sm:text-2xl text-secondary leading-none">
         {NAVBAR_CONFIG.logo.name}
       </div>
       <div className="text-[9px] tracking-widest text-[#f472b6] font-semibold uppercase">
@@ -126,9 +128,29 @@ const Logo: React.FC = () => (
   </Link>
 );
 
-const NavButton: React.FC<NavButtonProps> = ({ to, icon, label, variant = 'icon', badge }) => (
-  <Button to={to} variant={variant} icon={icon} badge={badge} aria-label={label}>
-    {label}
+// Below the sm breakpoint the buttons show only their icons; the label is
+// still read out through aria-label.
+const NavLabel: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span className="hidden sm:inline">{children}</span>
+);
+
+const NavButton: React.FC<NavButtonProps> = ({
+  to,
+  icon,
+  label,
+  variant = 'icon',
+  badge,
+  className,
+}) => (
+  <Button
+    to={to}
+    variant={variant}
+    icon={icon}
+    badge={badge}
+    aria-label={label}
+    className={className}
+  >
+    <NavLabel>{label}</NavLabel>
   </Button>
 );
 
@@ -147,18 +169,18 @@ const NavActions: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1 sm:gap-2">
       {/* Search */}
       <NavButton to="/search" icon={<Icons.Search />} label="Search" />
 
-      {/* Home */}
-      <NavButton to="/" icon={<Icons.Home />} label="Home" />
+      {/* Home (on phones the logo is the way home) */}
+      <NavButton to="/" icon={<Icons.Home />} label="Home" className="hidden sm:flex" />
 
       {/* Login / User */}
       {isAuthenticated && user ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Avatar */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-50 border border-pink-100">
+          <div className="flex items-center gap-2 px-1.5 sm:px-3 py-1.5 rounded-full bg-pink-50 border border-pink-100">
             {user.avatar ? (
               <img
                 src={user.avatar}
@@ -182,12 +204,12 @@ const NavActions: React.FC = () => {
             aria-label="Logout"
             onClick={() => setShowLogoutModal(true)}
           >
-            Logout
+            <NavLabel>Logout</NavLabel>
           </Button>
         </div>
       ) : (
         <Button variant="icon" icon={<Icons.Login />} aria-label="Login" onClick={openLogin}>
-          Login
+          <NavLabel>Login</NavLabel>
         </Button>
       )}
 
@@ -228,14 +250,14 @@ export const Navbar: React.FC = () => {
 
   const navbarClasses = `
     fixed top-0 left-0 right-0 z-[100]
-    px-4 md:px-14 py-5
-    flex items-center justify-between
+    px-4 md:px-14
+    flex items-center justify-between gap-2
     transition-all duration-300
     animate-[slideDown_0.7s_ease_both]
     ${
       scrolled
         ? 'bg-white/95 shadow-[0_4px_32px_rgba(236,72,153,0.08)] py-3 backdrop-blur-md'
-        : 'bg-white/75 backdrop-blur-2xl border-b border-[rgba(236,72,153,0.08)]'
+        : 'py-3 md:py-5 bg-white/75 backdrop-blur-2xl border-b border-[rgba(236,72,153,0.08)]'
     }
   `;
 

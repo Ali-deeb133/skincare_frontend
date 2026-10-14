@@ -57,12 +57,12 @@ const ChatIcon = () => (
 export const HeroBanner: React.FC = () => {
   return (
     // التغيير هنا: flex-col للجوال و px-6 بدلا من 20 للشاشات الصغيرة
-    <section className="relative flex flex-col lg:flex-row items-center min-h-screen px-6 md:px-12 lg:px-20 py-10 lg:py-30 gap-10 overflow-hidden bg-gradient-to-br from-[#fff5f8] via-primary-soft to-[#fdf2f8]">
+    <section className="relative flex flex-col lg:flex-row items-center lg:min-h-screen px-5 sm:px-6 md:px-12 lg:px-20 pt-28 pb-12 sm:pt-32 lg:py-30 gap-6 sm:gap-10 overflow-hidden bg-gradient-to-br from-[#fff5f8] via-primary-soft to-[#fdf2f8]">
       {/* Background Orbs & Sparkles */}
       <BackgroundDecor />
 
       {/* Left Content */}
-      <div className="flex-1 max-w-[520px] relative z-10 text-center lg:text-left mt-10 lg:mt-0">
+      <div className="flex-1 max-w-[520px] relative z-10 text-center lg:text-left">
         <Badge text="Clinical Skincare · Paris Formula" />
 
         <h1
@@ -74,7 +74,7 @@ export const HeroBanner: React.FC = () => {
         </h1>
 
         <p
-          className={`text-[15.5px] text-plum-soft leading-[1.85] max-w-[420px] mx-auto lg:mx-0 mb-10 font-light ${animationClasses.slideDown}`}
+          className={`text-[15px] sm:text-[15.5px] text-plum-soft leading-[1.75] sm:leading-[1.85] max-w-[420px] mx-auto lg:mx-0 mb-8 sm:mb-10 font-light ${animationClasses.slideDown}`}
           style={{ animationDelay: '0.2s' }}
         >
           We bring the finest cosmetic science from our Paris laboratory — formulas trusted by
@@ -87,7 +87,7 @@ export const HeroBanner: React.FC = () => {
 
       {/* Right Visual Area */}
       {/* التغيير هنا: إخفاء العناصر التي قد تتداخل في الشاشات الصغيرة جدا أو تصغير الحاوية */}
-      <div className="flex-1 w-full flex justify-center items-center lg:block scale-75 md:scale-90 lg:scale-100 relative">
+      <div className="flex-1 w-full flex justify-center items-center lg:block md:scale-90 lg:scale-100 relative">
         <RightVisual />
       </div>
 
@@ -118,7 +118,7 @@ const ActionButtons = () => {
 
   return (
     <div
-      className={`flex justify-center lg:justify-start gap-4 ${animationClasses.slideDown}`}
+      className={`flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 ${animationClasses.slideDown}`}
       style={{ animationDelay: '0.3s' }}
     >
       {/* زر التسوق */}
@@ -136,7 +136,7 @@ const ActionButtons = () => {
 
 const StatsList = () => (
   <div
-    className={`flex justify-center lg:justify-start gap-9 mt-12 ${animationClasses.slideDown}`}
+    className={`flex justify-center lg:justify-start gap-7 sm:gap-9 mt-10 sm:mt-12 ${animationClasses.slideDown}`}
     style={{ animationDelay: '0.4s' }}
   >
     {STATS.map((stat, i) => (
@@ -154,9 +154,11 @@ const StatsList = () => (
 // --- Right Section Subcomponents ---
 // =====================
 const RightVisual = () => (
-  <div className={`max-w-[580px] w-full relative h-[580px] z-10 ${animationClasses.heroFloat}`}>
+  <div
+    className={`max-w-[580px] w-full relative h-[320px] sm:h-[420px] md:h-[580px] z-10 ${animationClasses.heroFloat}`}
+  >
     {/* Background Circle */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] md:w-[490px] md:h-[490px] rounded-full bg-radial from-primary-soft via-primary-blush to-primary shadow-[0_24px_90px_rgba(236,72,153,0.22)]" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[290px] h-[290px] sm:w-[380px] sm:h-[380px] md:w-[490px] md:h-[490px] rounded-full bg-radial from-primary-soft via-primary-blush to-primary shadow-[0_24px_90px_rgba(236,72,153,0.22)]" />
 
     {/* Droplets - تظهر فقط في الشاشات الأكبر لعدم تشتيت الجوال */}
     <div className="hidden md:block">
@@ -174,9 +176,10 @@ const RightVisual = () => (
       ))}
     </div>
 
-    {/* Product Image */}
+    {/* Product Image. The float animation replaces the transform, so on
+        phones the photo is centred with offsets of half its size instead. */}
     <div
-      className={`absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] md:w-[380px] md:h-[380px] rounded-full overflow-hidden border-4 border-white/20 ${animationClasses.bottleFloat}`}
+      className={`absolute top-[calc(50%-110px)] left-[calc(50%-110px)] sm:top-[calc(50%-145px)] sm:left-[calc(50%-145px)] md:top-1/4 md:left-1/4 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] sm:w-[290px] sm:h-[290px] md:w-[380px] md:h-[380px] rounded-full overflow-hidden border-4 border-white/20 ${animationClasses.bottleFloat}`}
     >
       <img src={image} alt="Skincare Product" className="w-full h-full object-cover" />
     </div>
@@ -254,7 +257,7 @@ const BackgroundDecor = () => (
 // =====================
 const ScrollHint = () => (
   <div
-    className={`absolute bottom-5 lg:bottom-7.5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 ${animationClasses.fadeInUp}`}
+    className={`absolute bottom-5 lg:bottom-7.5 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 ${animationClasses.fadeInUp}`}
   >
     <span className="text-[10px] tracking-widest text-primary font-bold uppercase">Scroll</span>
     <div className="w-0.5 h-10 lg:h-12.5 bg-[rgba(236,72,153,0.15)] rounded-lg overflow-hidden">

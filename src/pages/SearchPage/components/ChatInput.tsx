@@ -56,7 +56,7 @@ const ChatInput: React.FC<Props> = ({ onSend, disabled, isLoggedIn }) => {
           onClick={submit}
           aria-label="Send message"
           disabled={!text.trim() || disabled || !isLoggedIn}
-          className="w-8 h-8 shrink-0 rounded-full bg-gradient-to-br from-sakura-accent to-sakura-dark text-white flex items-center justify-center disabled:opacity-40 hover:scale-105 hover:shadow-[0_3px_10px_rgba(192,80,138,0.4)] transition-all duration-200"
+          className="w-10 h-10 sm:w-8 sm:h-8 shrink-0 rounded-full bg-gradient-to-br from-sakura-accent to-sakura-dark text-white flex items-center justify-center disabled:opacity-40 hover:scale-105 hover:shadow-[0_3px_10px_rgba(192,80,138,0.4)] transition-all duration-200"
         >
           <svg
             width="14"

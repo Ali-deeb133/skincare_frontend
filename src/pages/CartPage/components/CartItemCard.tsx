@@ -37,11 +37,11 @@ const CartItemCard: React.FC<{ item: CartItemType }> = ({ item }) => {
 
   return (
     <div
-      className={`group flex gap-4 p-4 bg-white rounded-2xl border border-rose-100 hover:border-rose-300 hover:shadow-lg hover:shadow-rose-100/50 transition-all duration-300 animate-fadeIn ${
+      className={`group flex gap-3 sm:gap-4 p-3 sm:p-4 bg-white rounded-2xl border border-rose-100 hover:border-rose-300 hover:shadow-lg hover:shadow-rose-100/50 transition-all duration-300 animate-fadeIn ${
         isRemoving ? 'opacity-50 pointer-events-none' : ''
       }`}
     >
-      <div className="relative w-20 h-20 rounded-xl bg-gradient-to-br from-rose-50 to-pink-100 flex-shrink-0 overflow-hidden">
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-gradient-to-br from-rose-50 to-pink-100 flex-shrink-0 overflow-hidden">
         {item.product.url ? (
           <img
             src={getProductImageUrl(item.product.url)}
@@ -73,14 +73,14 @@ const CartItemCard: React.FC<{ item: CartItemType }> = ({ item }) => {
           <span className="text-gray-400 font-normal text-xs"> / each</span>
         </p>
 
-        <div className="flex items-center justify-between mt-2">
-          <div className="flex items-center gap-2 bg-rose-50 rounded-full px-2 py-1">
+        <div className="flex items-center justify-between gap-2 mt-2">
+          <div className="flex items-center gap-2 bg-rose-50 rounded-full px-1.5 sm:px-2 py-1">
             {/* زر - */}
             <button
               onClick={handleDecrease}
               aria-label="Decrease quantity"
               disabled={isUpdating || isRemoving}
-              className="w-6 h-6 rounded-full bg-white text-sakura-accent font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors disabled:opacity-40 shadow-sm"
+              className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-white text-sakura-accent font-bold text-sm flex items-center justify-center hover:bg-rose-100 transition-colors disabled:opacity-40 shadow-sm"
             >
               {isDecreasing ? '⏳' : '−'}
             </button>
@@ -94,25 +94,28 @@ const CartItemCard: React.FC<{ item: CartItemType }> = ({ item }) => {
               onClick={handleIncrease}
               aria-label="Increase quantity"
               disabled={isUpdating}
-              className="w-6 h-6 rounded-full bg-sakura-accent text-white font-bold text-sm flex items-center justify-center hover:bg-sakura-dark transition-colors disabled:opacity-40 shadow-sm"
+              className="w-7 h-7 sm:w-6 sm:h-6 rounded-full bg-sakura-accent text-white font-bold text-sm flex items-center justify-center hover:bg-sakura-dark transition-colors disabled:opacity-40 shadow-sm"
             >
               {isIncreasing ? '⏳' : '+'}
             </button>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <span className="font-bold text-gray-800 text-sm">${item.total_price.toFixed(2)}</span>
 
             <button
               onClick={handleRemove}
               disabled={isRemoving || isUpdating}
-              className="flex items-center gap-1 px-3 py-1.5 rounded-full
+              aria-label="Remove item"
+              className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full
   bg-rose-50 text-rose-500 text-xs font-medium
   hover:bg-rose-100 hover:text-rose-600
   transition-all duration-200
   disabled:opacity-40"
             >
-              {isRemoving ? '⏳ Removing...' : '🗑 Remove'}
+              {isRemoving ? '⏳' : '🗑'}
+              {/* On phones only the icon shows, so the row fits beside the quantity */}
+              <span className="hidden sm:inline">{isRemoving ? 'Removing...' : 'Remove'}</span>
             </button>
           </div>
         </div>

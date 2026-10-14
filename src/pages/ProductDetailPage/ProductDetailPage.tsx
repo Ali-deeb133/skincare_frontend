@@ -39,21 +39,21 @@ const ProductDetailPage: React.FC = () => {
   const ingredients = product.clean_ingreds?.split(',');
 
   return (
-    <div className="min-h-screen bg-sakura-base pt-35 px-6">
+    <div className="min-h-screen bg-sakura-base pt-24 sm:pt-35 px-4 sm:px-6 pb-16">
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12 bg-white rounded-3xl shadow-lg p-8">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-12 bg-white rounded-3xl shadow-lg p-5 sm:p-8">
           {/* IMAGE */}
           <div className="flex items-center justify-center group">
             <img
               src={getProductImageUrl(product.url)}
               alt={product.product_name}
-              className="w-full max-w-md object-contain transition-transform duration-500 group-hover:scale-105"
+              className="w-full max-w-md max-h-[320px] md:max-h-none object-contain transition-transform duration-500 group-hover:scale-105"
             />
           </div>
 
           {/* INFO */}
-          <div className="flex flex-col gap-6">
-            <h1 className="text-3xl font-bold text-sakura-ink leading-snug">
+          <div className="flex flex-col gap-4 sm:gap-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-sakura-ink leading-snug">
               {product.product_name}
             </h1>
 
@@ -86,7 +86,7 @@ const ProductDetailPage: React.FC = () => {
 
         {/* INGREDIENTS */}
         {ingredients && (
-          <div className="mt-12 bg-white rounded-2xl shadow-md p-6">
+          <div className="mt-6 sm:mt-12 bg-white rounded-2xl shadow-md p-5 sm:p-6">
             <h2 className="text-xl font-semibold text-sakura-ink mb-4">Ingredients</h2>
             <div className="grid md:grid-cols-2 gap-2 text-[#6a4a5c]">
               {ingredients.map((item: string, index: number) => (
