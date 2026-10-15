@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { productService } from '../services/productService';
 import { useSearchStore } from '../store/searchStore';
+import { useSlowServerHint } from './useSlowServerHint';
 import type { Product } from '../types/product.types';
 
 // Accepts both a plain array and a paginated `{ results: [...] }` response.
@@ -50,6 +51,7 @@ export const useProducts = () => {
   }, [filters, key]);
 
   const loading = result.key !== key;
+  useSlowServerHint(loading);
 
   return {
     products: result.products,
@@ -93,9 +95,11 @@ export const useProduct = (id: string | undefined, initialProduct?: Product) => 
   }, [id, initial]);
 
   const fetched = result?.id === id ? result : null;
+  const loading = Boolean(id) && !initial && !fetched;
+  useSlowServerHint(loading);
 
   return {
     product: initial ?? fetched?.product ?? null,
-    loading: Boolean(id) && !initial && !fetched,
+    loading,
   };
 };

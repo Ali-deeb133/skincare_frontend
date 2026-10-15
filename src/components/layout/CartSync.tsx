@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import useCartStore from '../../store/cartStore';
 import { useAuthStore } from '../../store/authStore';
 import Toast from '../ui/Toast';
+import { useSlowServerHint } from '../../hooks/useSlowServerHint';
 
 const TOAST_DURATION = 3000;
 const ERROR_DURATION = 5000;
@@ -17,6 +18,10 @@ export const CartSync = () => {
   const resetCart = useCartStore((state) => state.resetCart);
   const clearToast = useCartStore((state) => state.clearToast);
   const clearError = useCartStore((state) => state.clearError);
+  const isCartLoading = useCartStore((state) => state.loadingAction !== null);
+
+  // Tracked here, not in useCart, which runs once per product card.
+  useSlowServerHint(isCartLoading);
 
   // Load the cart on page load and login; empty it on logout.
   useEffect(() => {

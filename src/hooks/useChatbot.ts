@@ -3,6 +3,7 @@ import axios from 'axios';
 import { chatbotService } from '../services/chatbotService';
 import type { ChatMessage } from '../types/chat.types';
 import { useAuthStore } from '../store/authStore';
+import { useSlowServerHint } from './useSlowServerHint';
 
 const getStorageKey = (userId: string) => `lumiere_chat_${userId}`;
 
@@ -34,6 +35,7 @@ export const useChatbot = () => {
   const [messages, setMessages] = useState<ChatMessage[]>(() => loadMessages(storageKey));
 
   const [isTyping, setIsTyping] = useState(false);
+  useSlowServerHint(isTyping);
 
   // إذا تغير المستخدم، حمّل محادثته
   const [loadedKey, setLoadedKey] = useState(storageKey);

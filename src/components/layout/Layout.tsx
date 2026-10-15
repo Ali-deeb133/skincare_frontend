@@ -1,6 +1,7 @@
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CartSync } from './CartSync';
+import { SlowServerToast } from './SlowServerToast';
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 
@@ -17,6 +18,7 @@ export const Layout = () => {
     <>
       <Navbar />
       <CartSync />
+      <SlowServerToast />
       <main>
         <Outlet />
       </main>

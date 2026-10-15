@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import axios from 'axios'; // استيراد axios للتحقق من نوع الخطأ
 import { useAuthStore } from '../store/authStore';
 import { loginUser, registerUser } from '../services/authService';
+import { useSlowServerHint } from './useSlowServerHint';
 import type { AuthError, LoginRequest, RegisterRequest } from '../types/auth.types';
 
 // واجهة لتعريف شكل الخطأ القادم من السيرفر (Backend)
@@ -97,6 +98,8 @@ export const useAuth = () => {
     },
     [setLoading, setError, setAuth, closeDropdown, handleAuthError]
   );
+
+  useSlowServerHint(isLoading);
 
   // ============================================================
   // Actions & Helpers

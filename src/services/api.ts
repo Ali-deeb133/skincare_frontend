@@ -48,6 +48,13 @@ const isReadOnly = (config: InternalAxiosRequestConfig) =>
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Login and register must not depend on a saved token: an old or invalid one
+// would get a 401, and a 401 there means a wrong password, not an expired session.
+const PUBLIC_ENDPOINTS = ['/api/accounts/login/', '/api/accounts/register/'];
+
+const isPublicEndpoint = (config: InternalAxiosRequestConfig) =>
+  PUBLIC_ENDPOINTS.includes((config.url ?? '').split('?')[0]);
+
 const api = axios.create({
   baseURL: BASE_URL,
   timeout: TIMEOUT,
@@ -105,7 +112,7 @@ api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const access = tokenService.getAccess();
 
-    if (access && config.headers) {
+    if (access && config.headers && !isPublicEndpoint(config)) {
       config.headers.Authorization = `Bearer ${access}`;
     }
 
@@ -174,7 +181,12 @@ api.interceptors.response.use(
     // ============================================================
     const refreshToken = tokenService.getRefresh();
 
-    if (error.response?.status === 401 && !originalRequest._retry && refreshToken) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      refreshToken &&
+      !isPublicEndpoint(originalRequest)
+    ) {
       if (isRefreshing) {
         return new Promise((resolve, reject) => {
           failedQueue.push({
@@ -223,7 +235,11 @@ api.interceptors.response.use(
     // A 401 that could not be fixed by refreshing (no refresh token, or the
     // refreshed token was rejected too) means the saved session is dead.
     // Only when a token was stored: a wrong password at login is also a 401.
-    if (error.response?.status === 401 && tokenService.getAccess()) {
+    if (
+      error.response?.status === 401 &&
+      tokenService.getAccess() &&
+      !isPublicEndpoint(originalRequest)
+    ) {
       endSession();
     }
 
